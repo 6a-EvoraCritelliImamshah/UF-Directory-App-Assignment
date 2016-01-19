@@ -10,29 +10,31 @@ var fs = require('fs'),
     config = require('./config');
 
 /* Connect to your database */
-mongoose.connect('config')
+mongoose.connect(config.db.uri);
 /* 
   Instantiate a mongoose model for each listing object in the JSON file, 
   and then save it to your Mongo database 
 */
-var listings
+var listings;
 fs.readFile('listings.json', 'utf8', function(err, data) {
-    /*
-        This callback function should save the data in the listingData variable, 
-        then start the server. 
-    */
-    listings = data;
-    console.log(listings);
+    listings = JSON.parse(data);
+    //console.log(listings);
+    for (var i = 0; i < listingsData["entries"].length; i++)
+    {
+      var newListing = new Listing();
+      newListing.code = listingsData["entries"][i].code;
+      newListing.name = listingsData["entries"][i].name;
+      if (listingsData["entries"][i]["coordinates"]){
+      newListing.coordinates.latitude = listingsData["entries"][i]["coordinates"].latitude;
+      newListing.coordinates.longitude = listingsData["entries"][i]["coordinates"].longitude;
+      }
+      if (listingsData["entries"][i]["address"]){
+      newListing.address = listingsData["entries"][i].address;
+      }
+      newListing.save(function (err) {});
+    }
 });
-console.log(listings);
-/*
-Listing.collection.insertMany(listings, function(err, r) {
-  assert.equal(null, err);
-  assert.equal(3, r.insertedCount);
 
-  db.close();
-})
-*/
 /* 
   Once you've written + run the script, check out your MongoLab database to ensure that 
   it saved everything correctly. 
