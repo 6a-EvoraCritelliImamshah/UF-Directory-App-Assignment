@@ -15,10 +15,9 @@ mongoose.connect(config.db.uri);
   Instantiate a mongoose model for each listing object in the JSON file, 
   and then save it to your Mongo database 
 */
-var listings;
+var listingsData;
 fs.readFile('listings.json', 'utf8', function(err, data) {
-    listings = JSON.parse(data);
-    //console.log(listings);
+    listingsData = JSON.parse(data);
     for (var i = 0; i < listingsData["entries"].length; i++)
     {
       var newListing = new Listing();

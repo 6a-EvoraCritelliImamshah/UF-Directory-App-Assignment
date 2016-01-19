@@ -1,4 +1,10 @@
 /* Fill out these functions using Mongoose queries*/
+var fs = require('fs'),
+    mongoose = require('mongoose'), 
+    Schema = mongoose.Schema, 
+    Listing = require('./ListingSchema.js'), 
+    config = require('./config');
+mongoose.connect(config.db.uri);
 
 var findLibraryWest = function() {
   /* 
