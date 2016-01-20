@@ -25,15 +25,9 @@ var removeCable = function() {
     and remove this listing from your database and log the document to the console. 
    */
    // Get listing with code 'CABL'
-   Listing.find({ code: 'CABL' }, function(err, listing) {
+   Listing.findOneAndRemove({ code: 'CABL' }, function(err, listing) {
     if (err) throw err;
-    // delete listing
-    listing.remove(function(err) {
-      if (err) throw err;
-
-      // log the deletion
-      console.log('Listing successfully deleted');
-    });
+    console.log('Listing successfully deleted');
    });
 };
 var updatePhelpsMemorial = function() {
@@ -41,7 +35,7 @@ var updatePhelpsMemorial = function() {
     Phelps Memorial Hospital Center's address is incorrect. Find the listing, update it, and then 
     log the updated document to the console. 
    */
-   Listing.findOneAndUpdate({ name: 'Phelps Laboratory' }, { address: '102 Phelps Lab, Gainesville, FL 32611' }, function(err, listing) {
+   Listing.findOneAndUpdate({ name: 'Phelps Laboratory' }, { address: '102 Phelps Lab, Gainesville, FL 32611' }, { 'new': true}, function(err, listing) {
     if (err) throw err;
 
     // Log the update
